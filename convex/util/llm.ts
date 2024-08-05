@@ -21,13 +21,12 @@ export const LLM_CONFIG = {
   stopWords: ['<|eot_id|>'],
    */
 
-  /* OpenAI config:
-  ollama: false,
-  url: 'https://api.openai.com',
-  chatModel: 'gpt-3.5-turbo',
-  embeddingModel: 'text-embedding-ada-002',
-  embeddingDimension: 1536,
-   */
+  // OpenAI config:
+  // ollama: false,
+  // url: 'https://api.openai.com',
+  // chatModel: 'gpt-3.5-turbo',
+  // embeddingModel: 'text-embedding-ada-002',
+  // embeddingDimension: 1536,
 };
 
 function apiUrl(path: string) {
@@ -647,6 +646,10 @@ export async function ollamaFetchEmbedding(text: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ model: LLM_CONFIG.embeddingModel, prompt: text }),
+    })
+    .catch((e) => {
+      console.error(e);
+      throw new Error('Failed to fetch embeddings');
     });
     if (resp.status === 404) {
       const error = await resp.text();
